@@ -1,9 +1,9 @@
+import Task from './containers/TaskSlice/Task';
+
 const App = () => {
   return (
     <>
-      test
-
-
+      <Task />
     </>
   );
 };
