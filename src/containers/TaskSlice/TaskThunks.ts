@@ -2,7 +2,6 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
 import {AppDispatch, RootState} from "../../app/store";
 
-
 interface Task {
   id: string;
   title: string;
@@ -17,7 +16,7 @@ type AsyncThunkConfig = {
 
 export const fetchTasks = createAsyncThunk<Task[], void, AsyncThunkConfig>(
   'tasks/fetchTasks',
-  async (_, { rejectWithValue }) => {
+  async (_, {rejectWithValue}) => {
     try {
       const response = await axiosApi.get<{ [key: string]: Task }>('/tasks.json');
       const tasksArray = Object.entries(response.data || {}).map(([id, task]) => ({
@@ -34,9 +33,9 @@ export const fetchTasks = createAsyncThunk<Task[], void, AsyncThunkConfig>(
 
 export const addTask = createAsyncThunk<Task, string, AsyncThunkConfig>(
   'tasks/addTask',
-  async (title, { rejectWithValue }) => {
+  async (title, {rejectWithValue}) => {
     try {
-      const response = await axiosApi.post<Task>('/tasks.json', { title, status: false });
+      const response = await axiosApi.post<Task>('/tasks.json', {title, status: false});
       return response.data;
     } catch (error) {
       return rejectWithValue('Failed to add task');
@@ -46,8 +45,8 @@ export const addTask = createAsyncThunk<Task, string, AsyncThunkConfig>(
 
 export const toggleTaskStatus = createAsyncThunk<Task, string, AsyncThunkConfig>(
   'tasks/toggleTaskStatus',
-  async (id, { rejectWithValue, getState }) => {
-    const { tasks } = getState().tasks;
+  async (id, {rejectWithValue, getState}) => {
+    const {tasks} = getState().tasks;
     const task = tasks.find((t) => t.id === id);
 
     if (!task) {
@@ -68,7 +67,7 @@ export const toggleTaskStatus = createAsyncThunk<Task, string, AsyncThunkConfig>
 
 export const deleteTask = createAsyncThunk<void, string, AsyncThunkConfig>(
   'tasks/deleteTask',
-  async (id, { rejectWithValue, dispatch }) => {
+  async (id, {rejectWithValue, dispatch}) => {
     try {
       await axiosApi.delete(`/tasks/${id}.json`);
       await dispatch(fetchTasks());

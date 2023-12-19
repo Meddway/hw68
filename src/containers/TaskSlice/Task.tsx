@@ -34,30 +34,31 @@ const Task: React.FC = () => {
 
   return (
     <>
-      <h1>TodoTaskList</h1>
+      <h1 className="text-center">Task List</h1>
       {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      <ul>
+      {error && <p className="text-danger">{error}</p>}
+      <ul className="list-group m-3">
         {tasks.map((task) => (
-          <li key={task.id}>
+          <li key={task.id} className="list-group-item d-flex justify-content-around align-items-center">
             <input
               type="checkbox"
               checked={task.status}
               onChange={() => handleToggleTaskStatus(task.id)}
             />
             {task.title}{' '}
-            <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
+            <button onClick={() => handleDeleteTask(task.id)} className="btn btn-danger">Delete</button>
           </li>
         ))}
       </ul>
-      <div>
+      <div className="m-3">
         <input
           type="text"
           placeholder="Enter task title"
           value={newTaskTitle}
           onChange={(e) => setNewTaskTitle(e.target.value)}
+          className="form-control mb-2"
         />
-        <button onClick={handleAddTask}>Add Task</button>
+        <button onClick={handleAddTask} className="btn btn-primary">Add Task</button>
       </div>
     </>
   );

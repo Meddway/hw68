@@ -3,10 +3,9 @@ import Task from './containers/TaskSlice/Task';
 const App = () => {
   return (
     <>
-      <Task />
+      <Task/>
     </>
   );
 };
-
 
 export default App;
